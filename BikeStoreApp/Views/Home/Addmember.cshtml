@@ -1,0 +1,174 @@
+@model BikeStoreApp.Models.User
+
+@{
+    ViewData["Title"] = "Add Member";
+}
+
+<style>
+    .password-container {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BikeStoreApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BikeStoreApp.styles.css" asp-append-version="true" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body style="background-color: rgb(211, 225, 225);">
+
+    <div class="container mt-5">
+        <h4 class="text-center mb-4">Add New Member</h4>
+
+        <form id="addMemberForm" asp-controller="Home" asp-action="AddMember" method="post"
+            style="max-width: 500px; margin: 0 auto; padding: 30px; background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+            <div class="form-group">
+                <label for="username">Username <span style="color: red;">*</span>:</label>
+                <input type="text" id="username" name="Username" class="form-control" pattern="[A-Za-z]+"
+                    title="Username should contain only alphabets." required />
+                <small class="text-muted">Username Should contain only alphabets</small>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password <span style="color: red;">*</span>:</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="Password" class="form-control"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}"
+                        title="Password should contain at least 8 characters including one uppercase letter, one lowercase letter, one number, and one special character."
+                        required />
+                    <span class="toggle-password" id="togglePassword">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <small class="text-muted">Password should contain at least 8 characters including one uppercase letter,
+                    one lowercase letter, one number, and one special character.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email <span style="color: red;">*</span>:</label>
+                <input type="email" id="email" name="Email" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="contactno">Contact Number <span style="color: red;">*</span>:</label>
+                <input type="text" id="contactno" name="Contactno" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:<span style="color: red;">*</span></label>
+                <input type="text" id="city" name="City" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:<span style="color: red;">*</span></label>
+                <select id="gender" name="Gender" class="form-control">
+                    <option value="">Choose</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="isAdmin">Is Admin:<span style="color: red;">*</span></label>
+                <select id="isAdmin" name="IsAdmin" class="form-control">
+                    <option value="">Choose</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="isStaff">Is Staff:<span style="color: red;">*</span></label>
+                <select id="isStaff" name="IsStaff" class="form-control">
+                    <option value="">Choose</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <button style="margin-top: 10px;" type="submit" class="btn btn-primary btn-block">Add Member</button>
+            <a asp-action="AdminDashboard" style="margin: 20px;">Back to Dashboard</a>
+        </form>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script>
+            $(document).ready(function () {
+                $('#addMemberForm').submit(function (event) {
+                    event.preventDefault();
+
+                    var passwordInput = $('#password');
+                    var password = passwordInput.val();
+                    var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+
+                    if (!passwordPattern.test(password)) {
+                        alert('Password should contain at least 8 characters including one uppercase letter, one lowercase letter, one number, and one special character.');
+                        return;
+                    }
+
+                    fetch(this.action, {
+                        method: this.method,
+                        body: new FormData(this)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            throw new Error('Network response was not ok.');
+                        })
+                        .then(data => {
+                            alert(data.message);
+                            if (data.success) {
+                                window.location.href = '/Home/AdminDashboard';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with your fetch operation:', error);
+                        });
+                });
+
+                $('#togglePassword').click(function () {
+                    var passwordInput = $('#password');
+                    var type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+                    passwordInput.attr('type', type);
+                    $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+                });
+
+                $('#username').on('input', function () {
+                    var usernameInput = $(this).val().trim();
+                    var lastChar = usernameInput.charAt(usernameInput.length - 1);
+                    var alphabetPattern = /^[A-Za-z]+$/;
+
+                    if (!alphabetPattern.test(lastChar)) {
+                        alert('Username should contain only alphabets.');
+                        $(this).val(usernameInput.slice(0, -1)); 
+                    }
+                });
+            });
+
+        </script>
+    }
+</body>
+
+</html>

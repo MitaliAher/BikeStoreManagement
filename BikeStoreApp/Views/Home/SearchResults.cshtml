@@ -1,0 +1,36 @@
+@model List<BikeStoreApp.Models.Order>
+
+<h2>Search Results</h2>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Customer Name</th>
+                <th>Contact No</th>
+                <th>Final Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.ProductName</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.Contact</td>
+                    <td>@order.FinalAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<a asp-action="OrderDetail">Back</a>

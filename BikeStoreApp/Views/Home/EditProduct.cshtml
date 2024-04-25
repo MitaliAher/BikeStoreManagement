@@ -1,0 +1,75 @@
+@model BikeStoreApp.Models.Product
+
+<h2>Edit Product</h2>
+
+<form asp-controller="Home" asp-action="EditProduct" method="post" class="custom-form">
+    <input type="hidden" asp-for="Productid" />
+    <div class="form-group">
+        <label class="form-label">Product Image</label>
+        <img src="@Url.Content("~/image/" + Model.Img)" class="card-img-top" alt="Bike Image" height="180px" width="50px" />
+    </div>
+    <input type="hidden" asp-for="Categoryid" />
+    <input type="hidden" asp-for="Brandid" />
+    <input type="hidden" asp-for="Storeid" />
+    @* <input type="hidden" asp-for="Img" /> *@
+    <div class="form-group">
+        <label asp-for="Name" class="form-label">Product Name</label>
+        <input asp-for="Name" class="form-control" required/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="3" required></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" class="form-control" required/>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<style>
+.custom-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+</style>

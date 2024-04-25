@@ -1,0 +1,33 @@
+@model BikeStoreApp.Models.Order
+
+<h2>Edit Customer Information</h2>
+
+<form asp-action="EditCustomer" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="OrderId" />
+
+    <!-- Editable fields -->
+    <div class="form-group">
+        <label asp-for="CustomerName" class="control-label"></label>
+        <input asp-for="CustomerName" class="form-control" required/>
+        <span asp-validation-for="CustomerName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contact" class="control-label"></label>
+        <input asp-for="Contact" class="form-control" required/>
+        <span asp-validation-for="Contact" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address" class="control-label"></label>
+        <input asp-for="Address" class="form-control" required/>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group" style="margin-top: 10px;">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a asp-action="Customer" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

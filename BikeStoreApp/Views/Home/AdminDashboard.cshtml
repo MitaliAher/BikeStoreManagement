@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BikeStoreApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BikeStoreApp.styles.css" asp-append-version="true" />
+
+    <style>
+        @* body {
+            background-color: #f8f9fa;
+        } *@
+        
+        body {
+            background: url('/image/black.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .admin-dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .card-text {
+            color: #6c757d;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        body
+        {
+            background-color: rgb(241, 236, 236);
+        }
+        .card-body{
+            background-color: #96a0a9;
+        }
+    </style>
+</head>
+<body>
+<form asp-controller="Home" asp-action="Search" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search..." name="searchTerm">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" style="background-color: rgb(11, 211, 64);">Search</button>
+        </div>
+    </div>
+</form>
+ <div class="container admin-dashboard-container">
+        <h2 class="text-center mb-4">Welcome to Admin Dashboard</h2>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="AddMember">Add Member</a></h5>
+                        <p class="card-text">Add new members to the system.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+               <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageProduct">Product</a></h5>
+                        <p class="card-text">List of Products.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageCategory">Category</a></h5>
+                        <p class="card-text">List of Category.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageBrands">Brand</a></h5>
+                        <p class="card-text">List of Brands.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="Store">Store</a></h5>
+                        <p class="card-text">List of Stores.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="OrderDetail">Order</a></h5>
+                        <p class="card-text">Details of Order Placed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="text-center">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
+

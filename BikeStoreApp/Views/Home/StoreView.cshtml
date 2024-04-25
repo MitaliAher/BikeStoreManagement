@@ -1,0 +1,173 @@
+@model List<BikeStoreApp.Models.Store>
+
+@{
+    ViewData["Title"] = "StoreView List";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; 
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #d6d4d4; 
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type=text] {
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+
+        .action-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .action-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Store List</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="searchStores()" placeholder="Search for stores...">
+        </div>
+        <form asp-controller="Home" asp-action="AddStore" method="get">
+    <button type="submit" class="btn btn-primary" style="margin: 10px;">Add Store</button>
+</form>
+
+        @if (Model != null && Model.Count > 0)
+        {
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Store ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var store in Model)
+                    {
+                        <tr>
+                            <td>@store.Storeid</td>
+                            <td>@store.Name</td>
+                            <td>@store.Location</td>
+                            <td>
+                                <a href="@Url.Action("StoreStaffDetails", "Home", new { id = store.Storeid })">View Details</a> |
+                                <a class="action-link" asp-action="EditStore" asp-route-id="@store.Storeid">Edit</a> |
+                                <a class="action-link" asp-action="DeleteStore" asp-route-id="@store.Storeid">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                    <tr id="noRecordsRow" style="display: none;">
+                        <td colspan="4" style="text-align: center;">No records found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        }
+        else
+        {
+            <p>No stores available.</p>
+        }
+    </div>
+
+    <a asp-controller="Home" asp-action="StaffDashboard">Back</a>
+
+    <script>
+        function searchStores() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+            var found = false; 
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1]; 
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        found = true;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+
+            if (!found) {
+                var noRecordsRow = document.getElementById("noRecordsRow");
+                if (noRecordsRow) {
+                    noRecordsRow.style.display = "";
+                }
+            } else {
+                var noRecordsRow = document.getElementById("noRecordsRow");
+                if (noRecordsRow) {
+                    noRecordsRow.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

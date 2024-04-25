@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center; 
+        }
+
+        .order-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block; 
+            text-align: left; 
+        }
+
+        .order-container h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            list-style-type: none;
+            padding: 0;
+            text-align: left; 
+        }
+
+        .order-details li {
+            margin-bottom: 10px;
+        }
+
+        .btn-return-home,
+        .btn-download-pdf {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .btn-return-home:hover,
+        .btn-download-pdf:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="order-container">
+                    <h2>Order Confirmation</h2>
+
+                    <ul class="order-details">
+                        <li><strong>Order ID:</strong> @Model.OrderId</li>
+                        <li><strong>Product ID:</strong> @Model.ProductId</li>
+                        <li><strong>Customer Name:</strong> @Model.CustomerName</li>
+                        <li><strong>Contact:</strong> @Model.Contact</li>
+                        <li><strong>Address:</strong> @Model.Address</li>
+                        <li><strong>Final Amount:</strong> ₹ @Model.FinalAmount</li>
+                    </ul>
+
+                    <a href="@Url.Action("StaffDashboard", "Home")" class="btn btn-return-home">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</body>
+</html>

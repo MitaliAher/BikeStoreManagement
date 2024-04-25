@@ -1,0 +1,128 @@
+@model IEnumerable<BikeStoreApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<style>
+    .search-container {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .search-container input[type=text] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        float: left;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .search-container button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        float: left;
+        width: 10%;
+        box-sizing: border-box;
+    }
+
+    .search-container button:hover {
+        background-color: #45a049;
+    }
+
+    .row {
+        background-color: rgb(33, 72, 107);
+    }
+
+    .card {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <h2>Manage Products</h2>
+    <hr />
+    <div class="search-container">
+        <form onsubmit="return Search();" class="form-inline">
+            <input type="text" id="searchString" class="form-control mr-sm-2 mb-2" placeholder="Search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <a asp-controller="Home" asp-action="AddStaffProduct" class="btn btn-success mt-3" style="margin: 10px;" id="addProductButton">Add Product</a>
+    <div class="row" id="productsContainer">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                         <img src="@Url.Content("~/image/" + product.Img)" class="card-img-top" alt="Bike Image" height="180px" width="50px" >
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text">Price: ₹ @product.Price</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("EditStaffProduct", "Home", new { id = product.Productid })" class="btn btn-primary">Edit</a>
+                            <a href="@Url.Action("DeleteStaffProduct", "Home", new { id = product.Productid })" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+   <div class="row" id="noProductsFound" style="display: none;">
+    <div class="col-md-12">
+        <p style="color: white;">No products found.</p>
+        <a asp-controller="Home" asp-action="ManageStaffProduct" class="btn btn-danger mt-3">Continue Searching</a>
+    </div>
+</div>
+
+    <a asp-controller="Home" asp-action="StaffDashboard" class="btn btn-secondary mt-3" id="backButton">Back</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function Search() {
+            var searchString = document.getElementById("searchString").value.toLowerCase();
+            var cards = document.querySelectorAll(".card");
+            var found = false;
+
+            cards.forEach(function (card) {
+                var name = card.querySelector(".card-title").textContent.toLowerCase();
+                var description = card.querySelector(".card-text").textContent.toLowerCase();
+                var price = card.querySelector(".card-text").textContent.toLowerCase();
+
+                if (name.includes(searchString)) {
+                    card.parentNode.style.display = ""; 
+                    card.style.display = ""; 
+                    found = true;
+                } else {
+                    card.parentNode.style.display = "none"; 
+                    card.style.display = "none"; 
+                }
+            });
+
+            var noProductsFound = document.getElementById("noProductsFound");
+            var addButton = document.getElementById("addProductButton");
+            var backButton = document.getElementById("backButton");
+
+            if (!found) {
+                noProductsFound.style.display = "block"; 
+                addButton.style.display = "none"; 
+                backButton.style.display = "none"; 
+            } else {
+                noProductsFound.style.display = "none"; 
+                addButton.style.display = ""; 
+                backButton.style.display = ""; 
+            }
+
+            return false;
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+@model List<Order>
+
+<table>
+    <tr>
+        <th>Order Id</th>
+        <th>Customer Id</th>
+        <th>Customer Name</th>
+        <th>Contact No</th>
+        <th>Address</th>
+        <th>Product Name</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>@order.OrderId</td>
+            <td>@order.CustomerId</td>  
+            <td>
+                <span class="editable" data-id="@order.OrderId" data-field="CustomerName">@order.CustomerName</span>
+            </td>
+            <td>
+                <span class="editable" data-id="@order.OrderId" data-field="Contact">@order.Contact</span>
+            </td>
+            <td>
+                <span class="editable" data-id="@order.OrderId" data-field="Address">@order.Address</span>
+            </td>
+            <td>@order.ProductName</td>
+           <td>
+                    <a asp-action="EditCustomer" asp-route-id="@order.OrderId">Edit</a> |
+                    <a asp-action="DeleteCustomer" asp-route-id="@order.OrderId">Delete</a>
+
+                </td>
+        </tr>
+    }
+</table>
+<a asp-controller="Home" asp-action="StaffDashboard">Back</a>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.editable').on('blur', function () {
+                var id = $(this).data('id');
+                var field = $(this).data('field');
+                var value = $(this).text();
+                $.ajax({
+                    url: '/Order/EditField',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        field: field,
+                        value: value
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        
+    </script>
+}
+

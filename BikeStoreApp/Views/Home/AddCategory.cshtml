@@ -1,0 +1,15 @@
+@model BikeStoreApp.Models.Product
+
+<form asp-controller="Home" asp-action="AddCategory" method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="Name" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="Description" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</form>

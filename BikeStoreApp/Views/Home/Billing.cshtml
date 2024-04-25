@@ -1,0 +1,14 @@
+@{
+    var productName = TempData["ProductName"] as string;
+    var productPrice = TempData["ProductPrice"] as decimal?;
+}
+
+<h1>Billing Details</h1>
+
+<div>
+    <p><strong>Product Name:</strong> @productName</p>
+    <p><strong>Product Price:</strong> @productPrice</p>
+    <!-- Calculate GST and Final Amount here if needed -->
+</div>
+
+<a asp-controller="Home" asp-action="StoreStaffDetails">Back to Products</a>

@@ -1,0 +1,130 @@
+ @model IEnumerable<BikeStoreApp.Models.Brand>
+
+@{
+    ViewData["Title"] = "Manage Brands";
+}
+
+<style>
+    .search-container {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .search-container input[type=text] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        float: left;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .search-container button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        float: left;
+        width: 10%;
+        box-sizing: border-box;
+    }
+
+    .search-container button:hover {
+        background-color: #45a049;
+    }
+
+    .row {
+        background-color: rgb(33, 72, 107);
+    }
+
+    .card {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="search-container">
+        <form onsubmit="return Search();" class="form-inline">
+            <input type="text" id="searchString" class="form-control mr-sm-2 mb-2" placeholder="Search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <h2>Manage Brands</h2>
+    <hr />
+    <a asp-controller="Home" asp-action="AddBrand" class="btn btn-success mt-3" style="margin: 10px;" id="addBrandButton">Add Brand</a>
+    <div class="row" id="brandsContainer">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var brand in Model)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@brand.Name</h5>
+                            <img src="@Url.Content("~/image/" + brand.Img)" class="card-img-top" alt="Bike Image" height="150px" width="50px" >
+                            <p class="card-text">@brand.Description</p>
+                            <div class="d-flex justify-content-between">
+                                <a asp-controller="Home" asp-action="EditBrand" asp-route-id="@brand.Brandid" class="btn btn-primary">Edit</a>
+                                <a asp-controller="Home" asp-action="DeleteBrand" asp-route-id="@brand.Brandid" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="row" id="noBrandsFound" style="display: none;">
+        <div class="col-md-12">
+            <p>No brands found.</p>
+            <a asp-controller="Home" asp-action="ManageBrands" class="btn btn-danger mt-3">Continue Searching</a>
+        </div>
+    </div>
+    <a asp-controller="Home" asp-action="AdminDashboard" class="btn btn-secondary mt-3" id="backButton">Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function Search() {
+            var searchString = document.getElementById("searchString").value.toLowerCase();
+            var cards = document.querySelectorAll(".card");
+            var found = false;
+
+            cards.forEach(function (card) {
+                var name = card.querySelector(".card-title").textContent.toLowerCase();
+                var description = card.querySelector(".card-text").textContent.toLowerCase();
+
+                if (name.includes(searchString)) {
+                    card.parentNode.style.display = ""; 
+                    card.style.display = ""; 
+                    found = true;
+                } else {
+                    card.parentNode.style.display = "none"; 
+                    card.style.display = "none"; 
+                }
+            });
+
+            var noBrandsFound = document.getElementById("noBrandsFound");
+            var addBrandButton = document.getElementById("addBrandButton");
+            var backButton = document.getElementById("backButton");
+
+            if (!found) {
+                noBrandsFound.style.display = "block"; 
+                addBrandButton.style.display = "none"; 
+                backButton.style.display = "none"; 
+            } else {
+                noBrandsFound.style.display = "none"; 
+                addBrandButton.style.display = ""; 
+                backButton.style.display = ""; 
+            }
+
+            return false;
+        }
+    </script>
+}

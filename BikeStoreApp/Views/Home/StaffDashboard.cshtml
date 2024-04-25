@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BikeStoreApp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BikeStoreApp.styles.css" asp-append-version="true" />
+
+    <style>
+        @* body {
+            background-color: #f8f9fa;
+        } *@
+
+          body {
+            background: url('/image/black.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-body {
+            text-align: center;
+            background-color: #96a0a9;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .card-text {
+            color: #6c757d;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .staff-dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .staff-dashboard-container h2 {
+            color: #e8e2e2;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .staff-dashboard-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .staff-dashboard-container ul li {
+            margin-bottom: 10px;
+        }
+
+        .staff-dashboard-container button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .staff-dashboard-container button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+        <form asp-controller="Home" asp-action="Search" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search..." name="searchTerm">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" style="background-color: rgb(11, 211, 64);">Search</button>
+        </div>
+    </div>
+</form>
+
+    <div class="container staff-dashboard-container">
+        <h2>Welcome to Staff Dashboard!</h2>
+        <div class="row">
+            @* <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="AddMember">Add Member</a></h5>
+                        <p class="card-text">Add new members to the system.</p>
+                    </div>
+                </div>
+            </div> *@
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="Customer">Customer</a></h5>
+                        <p class="card-text">Customer Details.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageStaffProduct">Product</a></h5>
+                        <p class="card-text">List of Products.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageStaffCategory"> Category</a></h5>
+                        <p class="card-text">List of Categories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="ManageStaffBrands"> Brand</a></h5>
+                        <p class="card-text">List of Brands.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="StoreView">Store</a></h5>
+                        <p class="card-text">List of Store.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="StaffDetails">Staff Details</a></h5>
+                        <p class="card-text">Staff Details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row">
+
+            <div class="col-md-5 mb-5" style="left: 28%;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-controller="Home" asp-action="OrderStaffDetail"> Order</a></h5>
+                        <p class="card-text">Manage staff brands.</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+        <div class="text-center">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <button type="submit" class="logout-btn" style="background-color: red;">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

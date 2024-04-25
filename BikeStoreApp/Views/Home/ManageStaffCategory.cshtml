@@ -1,0 +1,126 @@
+@model IEnumerable<BikeStoreApp.Models.Category>
+
+@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<style>
+    .search-container {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .search-container input[type=text] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        float: left;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .search-container button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        float: left;
+        width: 10%;
+        box-sizing: border-box;
+    }
+
+    .search-container button:hover {
+        background-color: #45a049;
+    }
+
+    .row {
+        background-color: rgb(33, 72, 107);
+    }
+
+    .card {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="search-container">
+        <form onsubmit="return Search();" class="form-inline">
+            <input type="text" id="searchString" class="form-control mr-sm-2 mb-2" placeholder="Search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <h2>Manage Categories</h2>
+    <hr />
+    <a asp-controller="Home" asp-action="AddStaffCategory" class="btn btn-success mt-3" style="margin: 10px;" id="addCategoryButton">Add Category</a>
+    <div class="row" id="categoriesContainer">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                        <p class="card-text">@category.Description</p>
+                        <div class="text-center">
+                            <a asp-controller="Home" asp-action="EditStaffCategory" asp-route-id="@category.Categoryid" class="btn btn-warning btn-action">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteStaffCategory" asp-route-id="@category.Categoryid" class="btn btn-danger btn-action">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row" id="noCategoriesFound" style="display: none;">
+        <div class="col-md-12">
+            <p>No categories found.</p>
+            <a asp-controller="Home" asp-action="ManageStaffCategory" class="btn btn-danger mt-3">Continue Searching</a>
+        </div>
+    </div>
+    <a asp-controller="Home" asp-action="StaffDashboard" class="btn btn-secondary mt-3" id="backButton">Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function Search() {
+            var searchString = document.getElementById("searchString").value.toLowerCase();
+            var cards = document.querySelectorAll(".card");
+            var found = false;
+
+            cards.forEach(function (card) {
+                var name = card.querySelector(".card-title").textContent.toLowerCase();
+                var description = card.querySelector(".card-text").textContent.toLowerCase();
+
+                if (name.includes(searchString)) {
+                    card.parentNode.style.display = ""; 
+                    card.style.display = ""; 
+                    found = true;
+                } else {
+                    card.parentNode.style.display = "none"; 
+                    card.style.display = "none"; 
+                }
+            });
+
+            var noCategoriesFound = document.getElementById("noCategoriesFound");
+            var addCategoryButton = document.getElementById("addCategoryButton");
+            var backButton = document.getElementById("backButton");
+
+            if (!found) {
+                noCategoriesFound.style.display = "block"; 
+                addCategoryButton.style.display = "none"; 
+                backButton.style.display = "none"; 
+            } else {
+                noCategoriesFound.style.display = "none"; 
+                addCategoryButton.style.display = ""; 
+                backButton.style.display = ""; 
+            }
+
+            return false;
+        }
+    </script>
+}
